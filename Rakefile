@@ -37,7 +37,7 @@ require 'spec/rake/spectask'
 
 
 task :default do
-  %w(2.3.5 3.0.0.beta3).each do |version|
+  %w(2.3.8 3.0.0.beta4).each do |version|
     puts "Running specs with Rails #{version}"
     system("RAILS_VERSION=#{version} rake -s spec;")
   end
