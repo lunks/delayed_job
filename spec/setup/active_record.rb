@@ -15,7 +15,7 @@ ActiveRecord::Schema.define do
     table.datetime :failed_at
     table.string   :locked_by
     table.string   :handler_class
-    table.string   :handler_id
+    table.integer   :handler_id
     table.timestamps
   end
 

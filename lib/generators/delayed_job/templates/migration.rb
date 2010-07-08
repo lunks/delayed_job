@@ -10,7 +10,7 @@ class CreateDelayedJobs < ActiveRecord::Migration
       table.datetime :failed_at                    # Set when all retries have failed (actually, by default, the record is deleted instead)
       table.string   :locked_by                    # Who is working on this object (if locked)
       table.string   :handler_class                # The enqeued object class (if identifiable)
-      table.string   :handler_id                   # The enqeued object id (if identifiable)
+      table.integer   :handler_id                   # The enqeued object id (if identifiable)
       table.timestamps
     end
 	
