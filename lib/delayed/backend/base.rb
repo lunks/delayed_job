@@ -15,10 +15,22 @@ module Delayed
           unless object.respond_to?(:perform)
             raise ArgumentError, 'Cannot enqueue items which do not respond to perform'
           end
+          
+          identifiable = args.last.class == Hash and args.last[:identifiable] == true
+          
+          if identifiable
+            return unless Delayed::Job.all(:conditions => { :handler_class => object.class.name, :handler_id => object.id }).empty?
+            args.pop
+          end
     
           priority = args.first || 0
           run_at   = args[1]
-          self.create(:payload_object => object, :priority => priority.to_i, :run_at => run_at)
+          
+          if identifiable
+            self.create(:payload_object => object, :priority => priority.to_i, :run_at => run_at, :handler_class => object.class.name, :handler_id => object.id)
+          else
+            self.create(:payload_object => object, :priority => priority.to_i, :run_at => run_at)
+          end
         end
         
         # Hook method that is called before a new worker is forked
