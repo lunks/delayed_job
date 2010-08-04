@@ -28,4 +28,10 @@ end
 Delayed::Worker.backend = BACKENDS.first
 
 # Add this directory so the ActiveSupport autoloading works
+if ActiveSupport::Dependencies.respond_to? 'load_paths'
 ActiveSupport::Dependencies.load_paths << File.dirname(__FILE__)
+else
+require 'active_support/dependencies'
+ActiveSupport::Dependencies.autoload_paths << File.dirname(__FILE__)
+end
+
